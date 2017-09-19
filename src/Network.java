@@ -3,7 +3,7 @@ import java.util.Scanner;
 
 /**
  * Class to represent a network of <b> Neuron </b> objects which, together,
- * learn to solve a given problem testtt
+ * learn to solve a given prrroblem
  * 
  * @author SelloutMillionare
  * @see Neuron
