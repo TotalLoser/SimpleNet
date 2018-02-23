@@ -31,6 +31,10 @@ public class Network
 	 */
 	private Neuron[] outputs;
 	/**
+	 * input neurons
+	 */
+	private Neuron[] inputs;
+	/**
 	 * two dimensional array of neurons to represent the network
 	 */
 	private Neuron[][] neuronArray;
@@ -53,6 +57,8 @@ public class Network
 	 */
 	public Network(String networkfilename, String neuronfilename)
 	{
+		
+		
 		System.out.println();
 		try
 		{
@@ -78,6 +84,9 @@ public class Network
 			numInputs = Integer.parseInt(netStats[2].trim());
 			numPossibles = Integer.parseInt(netStats[3].trim());
 			neuronArray = new Neuron[iterations][neurons];
+			outputs = new Neuron[numPossibles];
+			for (int i = 0; i < outputs.length; i++)
+				outputs[i] = new Neuron(neurons);
 			for (int i = 0; i < iterations; i++)
 			{
 				String[] neurStats = neurloader.nextLine().split(":");
@@ -116,23 +125,14 @@ public class Network
 	 */
 	public Network(int tneurons, int titerations, int tnumInputs, int tnumPossibles)
 	{
-		try
-		{
-			pw = new PrintWriter(f);
-			pw.println("test");
-		}
-		catch (FileNotFoundException e)
-		{// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		// declare class variables
 		neurons = tneurons;
 		iterations = titerations;
 		numInputs = tnumInputs;
 		numPossibles = tnumPossibles;
 		neuronArray = new Neuron[iterations][neurons];
-		// populate the array with neurons with random wieght (load function
-		// coming soon)
+		// populate the array with neurons with random wieght 
+		
 		for (int i = 0; i < neuronArray.length; i++)
 		{
 			for (int j = 0; j < neuronArray[i].length; j++)
@@ -144,6 +144,15 @@ public class Network
 			}
 
 		}
+		// create and populate input neurons
+		inputs = new Neuron[numInputs];
+		for(int i = 0; i < inputs.length; i++)
+		{
+			inputs[i] = new Neuron(neurons);
+			for(int j = 0; j < inputs[i].getWeights().length; j++)
+				System.out.println(inputs[i].getWeights()[j]);
+		}
+		
 		// populate the array with output neurons with random weight
 		outputs = new Neuron[numPossibles];
 		for (int i = 0; i < outputs.length; i++)
@@ -162,6 +171,15 @@ public class Network
 	 */
 	public boolean learn(String expression) throws IllegalArgumentException
 	{
+		try
+		{
+			pw = new PrintWriter(f);
+			pw.println("test");
+		}
+		catch (FileNotFoundException e)
+		{// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		/**
 		 * the components of the expression seprerated into different elements
 		 */
@@ -267,7 +285,14 @@ public class Network
 			{
 				if(index == 0)
 				{
-					neuronArray[index][i].setState(inputs);
+					for(int j = 0; j < this.inputs.length; j++)
+					{
+						this.inputs[j].setState(inputs[j]);
+						System.out.println(this.inputs[j].getState());
+						
+						neuronArray[index][i].setState(this.inputs[j].getWeightedStates());
+					}
+					System.out.println();
 					// System.out.println("set neuron " + i + " to " +
 					// neuronArray[index][i].getState());
 					// pw.println("set neuron " + i + " to " +
@@ -278,7 +303,6 @@ public class Network
 					for (Neuron n : neuronArray[index - 1])
 					{
 						if(n.getState() == 0)
-							;
 						fireAll(inputs, index - 1);
 					}
 					tempIn = new double[neuronArray[index - 1].length];

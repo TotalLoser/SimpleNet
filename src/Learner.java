@@ -17,22 +17,22 @@ public class Learner
 //		System.out.println(test.getWeightedStates()[1]);
 //		System.out.println(test.getWeightedStates()[0]);
 //		System.out.println(test.getWeightedStates()[1]);
-		Network simple = new Network(10, 10, 3, 10);
-		System.out.println(simple.learn("5 + 5"));
-		try
-		{
-			simple.save(args[0], args[1]);
-			Network simpleCopy = new Network(args[0], args[1]);
-			System.out.println(simple.getWeightAtPosition(4, 3, 3));
-			System.out.println(simpleCopy.getWeightAtPosition(4, 3, 3));
-			System.out.println(simple.getWeightAtPosition(4, 4, 3));
-			System.out.println(simpleCopy.getWeightAtPosition(4, 4, 3));
-			System.out.println(simple.getWeightAtPosition(4, 3, 5));
-			System.out.println(simpleCopy.getWeightAtPosition(4, 3, 5));
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-		}
+		Network simple = new Network(20, 20, 3, 10);
+		System.out.println(simple.learn("2 + 2"));
+//		try
+//		{
+//			simple.save(args[0], args[1]);
+//			Network simpleCopy = new Network(args[0], args[1]);
+//			System.out.println(simple.getWeightAtPosition(4, 3, 3));
+//			System.out.println(simpleCopy.getWeightAtPosition(4, 3, 3));
+//			System.out.println(simple.getWeightAtPosition(4, 4, 3));
+//			System.out.println(simpleCopy.getWeightAtPosition(4, 4, 3));
+//			System.out.println(simple.getWeightAtPosition(4, 3, 5));
+//			System.out.println(simpleCopy.getWeightAtPosition(4, 3, 5));
+//		}
+//		catch(Exception e)
+//		{
+//			e.printStackTrace();
+//		}
 	}
 }
